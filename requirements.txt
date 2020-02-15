@@ -1,0 +1,7 @@
+flask
+flask-restful
+Flask-Migrate
+flask-cors
+Flask-Script
+Flask-SQLAlchemy
+python-dotenv
