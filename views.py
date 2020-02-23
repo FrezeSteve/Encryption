@@ -32,7 +32,7 @@ cipher_text = Fernet(key)
 class Login(Resource):
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.time_to_exp = timedelta(hours=24)
+        self.time_to_exp = timedelta(minutes=2)
 
     def post(self):
         self.parser.add_argument('login', type=dict, help="login credentials are needed")
@@ -124,7 +124,7 @@ class Register(Resource):
         try:
             data = jwt.decode(self.token.decode("UTF-8"), app.config['SECRET_KEY'], algorithms=['HS512', 'PS512'])
             # know that the current logged in user is using a token that is in the token table.
-            user_obj = models.User.query.filter_by(public_id=data['id']).first()
+            user_obj = models.User.query.filter_by(id=data['id']).first()
 
             if user_obj.token is None and not user_obj.admin:
                 raise Exception("You should login as admin")
