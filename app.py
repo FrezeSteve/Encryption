@@ -35,5 +35,10 @@ manager.add_command('db', MigrateCommand)
 # api.add_resource(VerifyToken, '/verify')
 # api.add_resource(Logout, '/logout')
 
+from . import views
+
+api.add_resource(views.Login, '/login')
+api.add_resource(views.Register, '/register')
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, host='0.0.0.0', port="5500")
