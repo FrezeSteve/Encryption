@@ -8,23 +8,9 @@ from uuid import uuid4
 
 
 # Accounts
-class Anonymous(db.Model):
-    id = Column(Integer, primary_key=True)
-    session_id = Column(Text, unique=True, index=True, nullable=False)
-    session_token = Column(Text, unique=True)
-    create_date = Column(DateTime(), default=datetime.utcnow)
-    last_login = Column(DateTime(), default=datetime.utcnow, nullable=False)
-
-    def __init__(self, token, session_id):
-        self.session_token = token
-        self.session_id = session_id
-
-    def __repr__(self):
-        return f"<Anonymous '{self.session_id}'>"
-
 
 class User(db.Model):
-    id = Column(Text, primary_key=True, unique=True, index=True, nullable=False, default=uuid4)
+    id = Column(Text, primary_key=True, unique=True, index=True, nullable=False, default=str(uuid4()))
     username = Column(String(120), unique=True, index=True, nullable=False)
     password = Column(String(120), unique=True, nullable=False)
     email = Column(String(120), unique=True, index=True, nullable=False)
@@ -49,7 +35,7 @@ class User(db.Model):
 
 
 class Token(db.Model):
-    id = Column(Text, primary_key=True, unique=True, index=True, nullable=False, default=uuid4)
+    id = Column(Text, primary_key=True, unique=True, index=True, nullable=False, default=str(uuid4()))
     token = Column(Text, unique=True, index=True, nullable=False)
     expiration = Column(DateTime(), default=datetime.utcnow)
     user = Column(Integer, ForeignKey('user.id'), nullable=False)
